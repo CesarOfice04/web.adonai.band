@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canciones del Domingo</title>
+    <link rel="shortcut icon" href="../ADONAIBAND.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html">Inicio</a>
+            <a href="canciones.html">Canciones para el Domingo</a>
+            <a href="#titulo-final">Ubicación</a>
+        </nav>
+        <section class="textos-header">
+            <h1 class="titulo">Canciones para el Domingo</h1>
+        </section>
+        <div class="ola" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+                <path d="M-1.40,2.47 C185.94,252.13 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #0F2027;"></path>
+            </svg>
+        </div>
+    </header>
+    <div class="contenedor">
+        <div id="video-container"></div>
+    </div>
+    <script>
+        let currentVideo = null; // Variable para almacenar el video actual
+    
+        const jubiloVideos = [
+            { title: "La Casa de Dios - Danilo Montero.", url: "https://www.youtube.com/embed/PgUI_eJqxwo" },
+            { title: "Yeshua Hamashiaj - Montesanto", url: "https://www.youtube.com/embed/oapXUlAxppw" },
+            { title: "Danzando - Christine D'clario", url: "https://www.youtube.com/embed/_1MfaKz_eCQ" },
+            { title: "Viene Ya - Miel San Marcos", url: "https://www.youtube.com/embed/y-7FYcf7VGY" }
+        ];
+    
+        const adoracionVideos = [
+            { title: "Haré Un Altar En Mi Casa - Grupo Grace", url: "https://www.youtube.com/embed/RcKno1UdC_Y" },
+            { title: "Como Dijiste - Christine D'clario", url: "https://youtube.com/embed/GIXGkaJfDMc" },
+            { title: "Impactante - Celeste", url: "https://www.youtube.com/embed/lluwjOJqyf4" },
+            { title: "Santo es el que vive - Montesanto", url: "https://www.youtube.com/embed/XDEco2yZqNU" }
+        ];
+    
+        const videoContainer = document.getElementById('video-container');
+    
+        // Función para crear los elementos de video
+        function createVideoElements(videos, container) {
+            videos.forEach(video => {
+                const videoDiv = document.createElement('div');
+                videoDiv.classList.add('video');
+                videoDiv.innerHTML = `
+                    <h3>${video.title}</h3>
+                    <iframe src="${video.url}?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+                `;
+    
+                // Agregar evento de clic
+                videoDiv.addEventListener('click', () => {
+                    if (currentVideo) {
+                        // Pausar el video actual
+                        const currentIframe = currentVideo.querySelector('iframe');
+                        const currentPlayer = new YT.Player(currentIframe, {
+                            events: {
+                                'onReady': function(event) {
+                                    event.target.pauseVideo();
+                                }
+                            }
+                        });
+                    }
+    
+                    // Reproducir el nuevo video
+                    currentVideo = videoDiv;
+                    const newIframe = videoDiv.querySelector('iframe');
+                    const newPlayer = new YT.Player(newIframe, {
+                        events: {
+                            'onReady': function(event) {
+                                event.target.playVideo();
+                            }
+                        }
+                    });
+                });
+    
+                container.appendChild(videoDiv);
+            });
+        }
+    
+        // Agregar videos de Júbilo
+        const jubiloTitle = document.createElement('h2');
+        jubiloTitle.classList.add('subtitulo');
+        jubiloTitle.textContent = "Júbilo";
+        videoContainer.appendChild(jubiloTitle);
+    
+        const jubiloDiv = document.createElement('div');
+        jubiloDiv.classList.add('video-container');
+        createVideoElements(jubiloVideos, jubiloDiv);
+        videoContainer.appendChild(jubiloDiv);
+    
+        // Agregar videos de Adoración
+        const adoracionTitle = document.createElement('h2');
+        adoracionTitle.classList.add('subtitulo');
+        adoracionTitle.textContent = "Adoración";
+        videoContainer.appendChild(adoracionTitle);
+    
+        const adoracionDiv = document.createElement('div');
+        adoracionDiv.classList.add('video-container');
+        createVideoElements(adoracionVideos, adoracionDiv);
+        videoContainer.appendChild(adoracionDiv);
+    </script>
+    <footer id="titulo-final">
+        <div class="contenedor-footer">
+            <div class="content-foo">
+                <h4>¡ENSAYEN!</h4>
+                <p></p>
+            </div>
+        </div>
+        <h2 class="titulo-final">&copy; ADONAI BAND</h2>
+    </footer>
+</body>
+</html>
